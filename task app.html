@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colorful Task Manager</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff; /* Light blue background */
+        }
+        h1 {
+            text-align: center;
+            color: #4b0082; /* Indigo */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        #task-form {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        #task-input {
+            flex-grow: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #9370db; /* Medium purple */
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+        #add-task {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #9370db; /* Medium purple */
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #add-task:hover {
+            background-color: #8a2be2; /* Blue violet */
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #e6e6fa; /* Lavender */
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        li:hover {
+            transform: translateY(-2px);
+        }
+        .task-text {
+            flex-grow: 1;
+            color: #4b0082; /* Indigo */
+        }
+        .complete-btn, .delete-btn {
+            padding: 8px 12px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        .complete-btn {
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task Manager</h1>
+    <form id="task-form">
+        <input type="text" id="task-input" placeholder="Enter a new task" required>
+        <button type="submit" id="add-task">Add Task</button>
+    </form>
+    <ul id="task-list"></ul>
+
+    <script>
+        const taskForm = document.getElementById('task-form');
+        const taskInput = document.getElementById('task-input');
+        const taskList = document.getElementById('task-list');
+
+        taskForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            addTask(taskInput.value);
+            taskInput.value = '';
+        });
+
+        function addTask(taskText) {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span class="task-text">${taskText}</span>
+                <button class="complete-btn">Complete</button>
+                <button class="delete-btn">Delete</button>
+            `;
+            taskList.appendChild(li);
+
+            li.querySelector('.complete-btn').addEventListener('click', function() {
+                li.querySelector('.task-text').classList.toggle('completed');
+            });
+
+            li.querySelector('.delete-btn').addEventListener('click', function() {
+                li.remove();
+            });
+        }
+    </script>
+</body>
+</html>
